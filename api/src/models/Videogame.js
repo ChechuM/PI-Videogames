@@ -5,8 +5,8 @@ module.exports = (sequelize) => {
   // defino el modelo
   sequelize.define('videogame', {
     id: {
-      type: DataTypes.INTEGER,
-      autoincrement: true,
+      type: DataTypes.STRING,
+      // autoincrement: true, // -> esto hace falta?
       primaryKey: true
     },
     name: {
@@ -21,7 +21,7 @@ module.exports = (sequelize) => {
       allowNull: false
     },
     image: {
-      type: DataTypes.NVARCHAR(Max), // en teoría  IMAGE has been deprecated and will be removed in some future release of SQL Server. Use NVARCHAR(Max) instead.
+      type: DataTypes.STRING(4000),
       allowNull: false
     },
     launch: {
@@ -34,7 +34,7 @@ module.exports = (sequelize) => {
     },
     genre: {
       type: DataTypes.STRING,
-      allowNull: false
+      // allowNull: false
     }
   });
 };
