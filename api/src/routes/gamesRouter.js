@@ -1,6 +1,10 @@
 const { Router } = require('express');
 const gamesRouter = Router();
 const { getGames, getGameById, findGame, createGame } = require('../controllers/gameControllers');
+const axios = require('axios');
+const {
+    API_KEY
+} = process.env;
 
 gamesRouter.get('/', async (req, res) => {
     const { name } = req.query;
@@ -26,7 +30,7 @@ gamesRouter.get('/:idVideogame', async (req, res) => {
     }
 });
 
-gamesRouter.post('/', async (req, res) => {
+gamesRouter.post('/newGame', async (req, res) => {
     try {
         const { name, description, platforms, image, launch, rating, genre } = req.body;
         const newGame = await createGame(name, description, platforms, image, launch, rating, genre);
@@ -35,7 +39,9 @@ gamesRouter.post('/', async (req, res) => {
     catch (error) {
         res.status(400).json({ error: error.message })
     }
-})
+});
+
+gamesRouter.post('/', async (req, res) => { })
 
 module.exports = {
     gamesRouter
