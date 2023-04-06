@@ -27,7 +27,7 @@ gamesRouter.post('/', async (req, res) => {
     catch (error) {
         res.status(400).json({ error: error.message })
     }
-})
+});
 
 gamesRouter.get('/:idVideogame', async (req, res) => {
     const { id } = req.params;
@@ -55,8 +55,8 @@ gamesRouter.get('/', async (req, res) => {
 
 gamesRouter.post('/newGame', async (req, res) => {
     try {
-        const { name, description, platforms, image, launch, rating, genre } = req.body;
-        const newGame = await createGame(name, description, platforms, image, launch, rating, genre);
+        const { name, description, plataformas, image, launch, rating, genre } = req.body;
+        const newGame = await createGame(name, description, plataformas, image, launch, rating, genre);
         res.status(200).json(newGame);
     }
     catch (error) {
@@ -66,4 +66,4 @@ gamesRouter.post('/newGame', async (req, res) => {
 
 module.exports = {
     gamesRouter
-}
+};
