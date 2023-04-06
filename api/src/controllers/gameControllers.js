@@ -19,9 +19,9 @@ const findGame = async (name) => {
     else throw new Error(`El Videojuego llamado ${name} no existe en la BDD`);
 };
 
-const createGame = async (name, description, platforms, image, launch, rating, genre) => {
+const createGame = async (name, description, platforms, image, launch, rating) => {
     let id = randomUUID();
-    const newGame = await Videogame.create({ id, name, description, platforms, image, launch, rating, genre });
+    const newGame = await Videogame.create({ id, name, description, platforms, image, launch, rating });
     return newGame;
 };
 
