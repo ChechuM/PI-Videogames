@@ -1,0 +1,3 @@
+Quiero mejorar lo siguiente:
+* Quiero que todo esté en inglés
+* Quiero que el ID de Videogame sea más sencillo 
