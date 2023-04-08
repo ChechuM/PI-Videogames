@@ -1,4 +1,5 @@
 const { Videogame } = require('../db.js');
+const { Op } = require("sequelize");
 
 const getGames = async () => {
     const games = await Videogame.findAll();
@@ -9,13 +10,18 @@ const getGames = async () => {
 const getGameById = async (id) => {
     const game = await Videogame.findByPk(id);
     if (game) return game;
-    else throw new Error(`The Videogame with id ${id} does not exist on the DataBase`);
+    else return (`The Videogame with id ${id} does not exist on the DataBase`);
 };
 
-const findGame = async (name) => {
-    const results = await Videogame.findAll({ where: { name: name } });
-    if (results) return results;
-    else throw new Error(`The Videogame called ${name} does not exist on the DataBase`);
+const findGameByName = async (name) => {
+    const results = await Videogame.findAll({
+        limit: 15,
+        where: {
+            name: { [Op.iLike]: `%${name}%` }
+        }
+    });
+    if (results.length > 0) return results;
+    else return (`The Videogame called ${name} does not exist on the DataBase`);
 };
 
 const createGame = async (name, description, platforms, image, launch, rating, genre) => {
@@ -26,6 +32,6 @@ const createGame = async (name, description, platforms, image, launch, rating, g
 module.exports = {
     getGames,
     getGameById,
-    findGame,
+    findGameByName,
     createGame
 };
