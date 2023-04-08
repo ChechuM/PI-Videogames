@@ -1,5 +1,6 @@
 const { Genre } = require('../db.js');
 
+
 const saveGenres = async (id, name) => {
     const genres = await Genre.create({ id, name });
     return genres;

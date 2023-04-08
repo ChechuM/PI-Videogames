@@ -35,10 +35,10 @@ let objGame = (game) => {
     return wanted;
 }
 
-// Busca los primeros 15 juegos que tengan la palabra recibida por query 
-// Busca independientemente de mayúsculas o minúsculas
-// Busca en la Api y en BDD
-// Si no existe el videojuego, debe mostrar un mensaje adecuado
+// DONE! = Busca los primeros 15 juegos que tengan la palabra recibida por query 
+// DONE! = Busca independientemente de mayúsculas o minúsculas
+// DONE! = Busca en la Api y en BDD
+// DONE! = Si no existe el videojuego, debe mostrar un mensaje adecuado
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
     searchName = name.toLowerCase();

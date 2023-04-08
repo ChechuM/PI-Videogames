@@ -6,7 +6,7 @@ const {
     API_KEY
 } = process.env;
 
-genreRouter.post('/', async (req, res) => {
+let postGenres = async () => {
     try {
         await axios('https://api.rawg.io/api/genres?key=' + API_KEY)
             .then((response) => {
@@ -18,18 +18,21 @@ genreRouter.post('/', async (req, res) => {
                     let { id, name } = genre;
                     return await saveGenres(id, name);
                 });
-                return results;
             })
-        res.status(200).json('Géneros guardados en la BDD');
     }
     catch (error) {
         res.status(400).json({ error: error.message })
     }
-});
+};
 
 genreRouter.get('/', async (req, res) => {
     try {
         let genres = await getGenres();
+        if (genres.length === 0) {
+            genres = await postGenres();
+            genres = await getGenres();
+            return res.status(200).json(genres)
+        }
         res.status(200).json(genres)
     }
     catch (error) {
