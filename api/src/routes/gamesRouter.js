@@ -5,7 +5,7 @@ const axios = require('axios');
 const {
     API_KEY
 } = process.env;
-const apiGames = 'https://api.rawg./api/games?key=' + API_KEY;
+const apiGames = 'https://api.rawg.io/api/games?key=' + API_KEY;
 
 let objGame = (game) => {
     let platArr = game.platforms;
@@ -42,34 +42,39 @@ let objGame = (game) => {
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
     searchName = name.toLowerCase();
-    let gamesName = [];
-    if (searchName) gamesName = await findGameByName(searchName);
-    if (gamesName.length < 15) {
-        try {
-            await axios(apiGames)
-                .then((response) => {
-                    let results = response.data.results;
-                    results.forEach((game) => {
-                        if (gamesName.length >= 15) return gamesName;
-                        else {
-                            let gameName = game.id.toLowerCase();
-                            if (gameName.includes(searchName)) {
-                                let wanted = objGame(searchName);
-                                gamesName.push(wanted);
-                            }
-                        }
-                    })
-                    return gamesName;
-                })
-            res.status(200).json(gamesName)
-        }
-        catch (error) {
-            res.status(400).json({ error: error.message })
-        }
+    try {
+        await axios(apiGames)
+            .then((response) => {
+                let results = response.data.results;
+                let sortApiName = [];
+                for (let game = 0; game < results.length; game++) {
+                    let nameMin = results[game].name.toLowerCase();
+                    if (nameMin.includes(searchName)) {
+                        let wanted = objGame(results[game]);
+                        sortApiName.push(wanted);
+                    }
+                }
+                return sortApiName;
+            })
+            .then(async (sortApiName) => {
+                if (sortApiName.length < 15) {
+                    let sortBDDName = await findGameByName(searchName);
+                    let totalGameName = sortApiName.concat(sortBDDName);
+                    return totalGameName;
+                }
+            })
+            .then((totalGameName) => {
+                if (totalGameName.length === 0) {
+                    let notFound = `The Videogame called ${name} does not exist... yet`
+                    res.status(200).json(notFound)
+                }
+                if (totalGameName.length > 15) res.status(200).json(totalGameName.slice(0, 15))
+                res.status(200).json(totalGameName)
+            })
     }
-    else return res.status(200).json(gamesName)
-    // else games = await getGames();
-
+    catch (error) {
+        res.status(400).json({ error: error.message })
+    }
 });
 
 // DONE! = Debería devolver un objeto con la información sobre el juego pedido por ID
@@ -94,7 +99,7 @@ gamesRouter.get('/:idVideogame', async (req, res) => {
                     })
                     if (wanted) return res.status(200).json(wanted)
                     else {
-                        let notFound = `The Videogame with id ${idVideogame} does not exist yet. Try and create one yourself!`;
+                        let notFound = `The Videogame with id ${idVideogame} does not exist... yet`;
                         return res.status(200).json(notFound)
                     }
                 })
