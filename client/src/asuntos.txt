@@ -1,0 +1,5 @@
+Asuntos:
+
+Preguntas que tengo:
+* Qué son las fciones reportWebVitals???
+* Qué es el React.StrictMode?
