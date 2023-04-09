@@ -10,7 +10,6 @@ import Landing from './components/Landing/Landing';
 function App() {
   return (
     <div className="App">
-      <h1>Henry Videogames</h1>
       <Routes>
         <Route exact path='/videogames/newgame' element={<Form />} />
         <Route exact path='/videogames/:idVideogame' element={<Detail />} />
