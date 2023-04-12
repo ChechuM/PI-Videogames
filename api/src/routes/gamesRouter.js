@@ -42,6 +42,7 @@ let objGame = (game) => {
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
     searchName = name.toLowerCase();
+    console.log('this is el router getting the call:', searchName)
     try {
         await axios(apiGames)
             .then((response) => {
