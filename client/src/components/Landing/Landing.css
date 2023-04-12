@@ -1,16 +1,81 @@
-/* body {
-    margin: 0;
-    background-color: #000;
-    background-image: url('https://images8.alphacoders.com/860/thumbbig-860215.webp');
-    background-attachment: fixed;
-    width: 100%;
-    height: 1000px;
-} */
-html {
-    background-color: black;
+.landing {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
     background: url('https://images2.alphacoders.com/127/thumbbig-1270040.webp') no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+}
+
+button {
+    position: relative;
+    bottom: -15.5rem;
+    right: -45.0rem;
+    background: transparent;
+    color: var(--pink);
+    text-decoration: none;
+
+    border: none;
+    letter-spacing: 0.1rem;
+    font-size: 2rem;
+    padding: 1rem 3rem;
+    transition: 0.2s;
+    width: 18.5rem;
+    cursor: crosshair;
+}
+
+button:hover {
+    background: var(--ebony);
+    animation: box 3s infinite;
+    text-transform: uppercase;
+}
+
+button:active {
+    background-color: var(--bone);
+    transform: translateY(0.4rem);
+}
+
+@keyframes move {
+    0% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(0.5rem);
+    }
+
+    100% {
+        transform: translateX(0);
+    }
+}
+
+@keyframes box {
+    0% {
+        box-shadow: #27272c;
+    }
+
+    50% {
+        box-shadow: 0 0 2.5rem var(----color);
+    }
+
+    100% {
+        box-shadow: var(--grey);
+    }
+}
+
+/* logo Henry*/
+img {
+    width: 2rem;
+    height: 2rem;
+}
+
+.top {
+    color: var(--pink);
+    font-weight: bolder;
+    position: absolute;
+    top: 0.3rem;
+    left: 0.1rem;
 }

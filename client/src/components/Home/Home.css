@@ -1,0 +1,15 @@
+html {
+    background: url('https://cdn.wallpapersafari.com/26/26/brTGjH.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    /* background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp7Ipd8adHPmL8dSz51jzAyuyBRjc2vs6dVg&usqp=CAU') */
+}
+
+.home {
+    max-width: 300rem
+}
+
+/* Wallpaper Prince of Persia
+'https://c4.wallpaperflare.com/wallpaper/663/385/285/sand-the-sky-the-city-the-wind-wallpaper-preview.jpg */

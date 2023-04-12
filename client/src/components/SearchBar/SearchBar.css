@@ -1,0 +1,13 @@
+.barra {
+    background: rgba(255, 255, 255, 0.2);
+    margin-top: 0.1rem;
+    padding-right: 0.5rem;
+    height: 4.5rem;
+}
+
+.input {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: medium;
+    width: 28rem;
+    min-height: 3rem;
+}

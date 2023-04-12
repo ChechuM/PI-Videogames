@@ -1,0 +1,46 @@
+.upperDiv {
+    border-radius: 1rem;
+    margin-left: 0.5rem;
+    margin-right: 0.5rem;
+    /* min-width: 25rem;
+    max-width: 30.5rem; */
+}
+
+.image {
+    height: 20rem;
+    border-radius: 1rem;
+    width: auto;
+}
+
+.divGenres {
+    display: none;
+    font-weight: bolder;
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background-color: var(--sepia);
+    opacity: 0.6;
+    border-radius: 0.5rem;
+}
+
+.imgName {
+    position: relative;
+    border-radius: 1rem;
+    background: transparent;
+}
+
+
+.imgName:hover .divGenres {
+    display: block;
+}
+
+.nameGame {
+    position: absolute;
+    bottom: 0.1rem;
+    left: 0.3rem;
+    background-color: var(--sepia);
+    opacity: 0.6;
+    font-size: large;
+    color: var(--blue);
+    padding-right: .5rem;
+}

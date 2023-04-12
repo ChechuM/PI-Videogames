@@ -3,3 +3,6 @@ Asuntos:
 Preguntas que tengo:
 * Qué son las fciones reportWebVitals???
 * Qué es el React.StrictMode?
+
+Quiero:
+* Arreglar las vistas para la web en caso de ser vista en el móvil -> responsive design
