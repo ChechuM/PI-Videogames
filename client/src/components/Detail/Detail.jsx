@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faHome } from '@fortawesome/free-solid-svg-icons';
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
 export default function Detail() {
     const { idVideogame } = useParams();
@@ -39,13 +40,15 @@ export default function Detail() {
 
     return (
         <div className='total'>
-            <button onClick={() => { navigate('/videogames') }} className='homeBtn'><Icon icon={faHome} /> </button>
-            <div className='game'>
-                <img src={videogame.image} alt='videogames image' className='detailImage' />
+            <button onClick={() => { navigate('/videogames') }} className='homeBtn'><span className='spanHome'> <Icon icon={faArrowLeft} />  back home! </span><Icon icon={faHome} /></button>
+            <div className='detailTotal'>
+                <div className='nameImgId'>
+                    <h1 className='detailName'>{videogame.name}</h1>
+                    <img src={videogame.image} alt='videogames image' className='detailImage' />
+                    <p className='idDetail'>id: {videogame.id}</p>
+                </div>
                 <div className='textos'>
-                    <h1>{videogame.name}</h1>
-                    <p>id: {videogame.id}</p>
-                    <div>{videogame.description} launched on {videogame.launch}</div>
+                    <div className='description'>{videogame.description} launched on {videogame.launch}</div>
                     <p> Genres: {videogame.genres}</p>
                     <p> You can play it in: {videogame.platforms}</p>
                     <h3> Rating: {videogame.rating}</h3>

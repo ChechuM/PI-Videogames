@@ -12,17 +12,37 @@
     cursor: pointer;
 }
 
-.game {
-    padding: 10rem;
-    display: flex;
-    background: transparent;
+.spanHome {
+    display: none;
+}
+
+.homeBtn:hover .spanHome {
+    display: inline;
+    transition: 0.3ms;
 }
 
 .detailImage {
-    width: 40rem;
+    height: 30rem;
+    max-width: 40rem;
+    width: auto;
     border-radius: 1rem;
 }
 
+.idDetail {
+    font-size: smaller;
+}
+
+.detailTotal {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
 .textos {
-    padding: 0.1rem;
+    padding: 15rem;
+    background: rgba(172, 167, 151, 70%)
+}
+
+.description {
+    font-weight: bolder;
 }
