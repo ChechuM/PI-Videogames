@@ -7,7 +7,7 @@ const {
 } = process.env;
 const apiGames = 'https://api.rawg.io/api/games?key=' + API_KEY;
 
-let objGame = (game) => {
+const objGame = (game) => {
     let platArr = game.platforms;
     let plataformas = [];
     platArr.forEach((plat) => {
@@ -93,11 +93,13 @@ gamesRouter.get('/:idVideogame', async (req, res) => {
             await axios(apiGames)
                 .then((response) => {
                     let results = response.data.results;
-                    let wanted = results.find((game) => {
+                    let wanted = {};
+                    for (let i = 0; i < results.length; i++) {
+                        const game = results[i];
                         if (game.id.toString() === idVideogame) {
-                            return objGame(game);
+                            wanted = objGame(game)
                         }
-                    })
+                    }
                     if (wanted) return res.status(200).json(wanted)
                     else {
                         let notFound = `The Videogame with id ${idVideogame} does not exist... yet`;
