@@ -1,0 +1,28 @@
+.total {
+    padding: 2rem;
+    display: flex;
+}
+
+.homeBtn {
+    color: var(--ebony);
+    border: 0.1rem solid var(--sepia);
+    top: 2rem;
+    position: absolute;
+    right: 3rem;
+    cursor: pointer;
+}
+
+.game {
+    padding: 10rem;
+    display: flex;
+    background: transparent;
+}
+
+.detailImage {
+    width: 40rem;
+    border-radius: 1rem;
+}
+
+.textos {
+    padding: 0.1rem;
+}

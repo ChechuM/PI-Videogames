@@ -10,7 +10,7 @@
     background-size: cover;
 }
 
-button {
+.start {
     position: relative;
     bottom: -15.5rem;
     right: -45.0rem;
@@ -27,13 +27,13 @@ button {
     cursor: crosshair;
 }
 
-button:hover {
+.start:hover {
     background: var(--ebony);
     animation: box 3s infinite;
     text-transform: uppercase;
 }
 
-button:active {
+.start:active {
     background-color: var(--bone);
     transform: translateY(0.4rem);
 }
@@ -67,7 +67,7 @@ button:active {
 }
 
 /* logo Henry*/
-img {
+.logoHenry {
     width: 2rem;
     height: 2rem;
 }

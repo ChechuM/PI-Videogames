@@ -18,7 +18,6 @@ export default function Home(props) {
         fetch('http://localhost:3001/videogames')
             .then((response) => response.json())
             .then((data) => {
-                console.log(data)
                 setVideogames((videogames) => [...videogames, ...data])
             })
     }, [])

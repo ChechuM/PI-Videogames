@@ -2,8 +2,7 @@
     border-radius: 1rem;
     margin-left: 0.5rem;
     margin-right: 0.5rem;
-    /* min-width: 25rem;
-    max-width: 30.5rem; */
+
 }
 
 .image {
@@ -29,6 +28,24 @@
     background: transparent;
 }
 
+.imgName:hover {
+    overflow: visible;
+    height: auto;
+    z-index: 999;
+    transform: scale(1.2);
+    transition: 3ms;
+}
+
+.imgName:hover .nameGame {
+    font-size: larger;
+    background-color: var(--blue);
+    color: var(--bone);
+    transform: scale(1.4);
+    margin-left: 10%;
+    margin-bottom: 10%;
+    transition: 3s;
+}
+
 
 .imgName:hover .divGenres {
     display: block;
@@ -41,6 +58,7 @@
     background-color: var(--sepia);
     opacity: 0.6;
     font-size: large;
+
     color: var(--blue);
     padding-right: .5rem;
 }

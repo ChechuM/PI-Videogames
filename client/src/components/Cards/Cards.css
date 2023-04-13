@@ -1,4 +1,9 @@
 .divCards {
     background: transparent;
     display: flex;
+    flex-wrap: wrap;
+    max-width: 110rem;
+    justify-content: center;
+    padding: 2rem;
+    padding-left: 10rem;
 }
