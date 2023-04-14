@@ -10,7 +10,7 @@ import Landing from './components/Landing/Landing';
 
 function App() {
   const navigate = useNavigate();
-  const goHome = () => {
+  const getStarted = () => {
     navigate('/videogames');
   }
 
@@ -28,7 +28,7 @@ function App() {
         <Route exact path='/videogames/newgame' element={<Form />} />
         <Route exact path='/videogames/:idVideogame' element={<Detail />} />
         <Route exact path='/videogames' element={<Home onSearch={onSearch} />} />
-        <Route exact path='/' element={<Landing goHome={goHome} />} />
+        <Route exact path='/' element={<Landing getStarted={getStarted} />} />
         <Route exact path='/genres' element={<Genres />} />
       </Routes >
     </div>
