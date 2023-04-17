@@ -42,10 +42,9 @@ const objGame = (game) => {
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
     searchName = name.toLowerCase();
-    console.log('this is el router getting the call:', searchName)
     try {
         await axios(apiGames)
-            .then((response) => {
+            .then((response) => { // 
                 let results = response.data.results;
                 let sortApiName = [];
                 for (let game = 0; game < results.length; game++) {
@@ -60,7 +59,9 @@ gamesRouter.get('/name', async (req, res) => {
             .then(async (sortApiName) => {
                 if (sortApiName.length < 15) {
                     let sortBDDName = await findGameByName(searchName);
-                    let totalGameName = sortApiName.concat(sortBDDName);
+                    let totalGameName;
+                    if (typeof sortBDDName !== "string") totalGameName = sortApiName.concat(sortBDDName);
+                    else totalGameName = [...sortApiName]
                     return totalGameName;
                 }
             })
