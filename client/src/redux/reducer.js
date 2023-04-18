@@ -1,8 +1,9 @@
-import { GET_ALL_GAMES, ADD_GAME, FILTER_BY_GENRE, FILTER_BY_ORIGIN, ORDER_BY_RATING, ORDER_BY_NAME } from "./actions";
+import { GET_ALL_GAMES, GET_ALL_GENRES, GET_GAMES_BY_NAME, ADD_GAME, FILTER_BY_GENRE, FILTER_BY_ORIGIN, ORDER_BY_RATING, ORDER_BY_NAME } from "./actions";
 
 const initialState = {
+    allVideogames: [],
     videogames: [],
-    filteredVideogames: []
+    genres: []
 }
 
 const rootReducer = (state = initialState, action) => {
@@ -10,13 +11,27 @@ const rootReducer = (state = initialState, action) => {
         case GET_ALL_GAMES:
             return {
                 ...state,
-                videogames: [...state.videogames, ...action.payload]
+                videogames: [...action.payload],
+                allVideogames: [...state.allVideogames, ...action.payload]
+            }
+
+        case GET_ALL_GENRES:
+            return {
+                ...state,
+                genres: [...action.payload]
+            }
+
+        case GET_GAMES_BY_NAME:
+            return {
+                ...state,
+                videogames: [...action.payload]
             }
 
         case ADD_GAME:
             return {
                 ...state,
-                videogames: [...state.videogames, action.payload]
+                videogames: [...state.videogames, action.payload],
+                allVideogames: [...state.allVideogames, action.payload]
             }
 
         case FILTER_BY_GENRE:
@@ -24,32 +39,37 @@ const rootReducer = (state = initialState, action) => {
             const filteredByGenre = state.videogames.filter(game => game.gender === action.payload)
             return {
                 ...state,
-                filteredVideogames: [...filteredByGenre]
+                videogames: [...filteredByGenre]
             }
         case FILTER_BY_ORIGIN:
             let filteredByOrigin = []
-            if (action.payload === 'base de datos') filteredByOrigin = state.videogames.filter(game => game.id < 10)
-            if (action.payload === 'created by user') filteredByOrigin = state.videogames.filter(game => game.id > 10)
+            if (action.payload === 'base de datos') filteredByOrigin = state.allVideogames.filter(game => game.id < 10)
+            if (action.payload === 'created by user') filteredByOrigin = state.allVideogames.filter(game => game.id > 10)
             return {
                 ...state,
-                filteredVideogames: [...filteredByOrigin]
+                videogames: [...filteredByOrigin]
             }
         case ORDER_BY_RATING:
             return {
                 ...state,
-                filteredVideogames:
+                videogames:
                     action.payload === 'Ascendente'
-                        ? state.videogames.sort((a, b) => a.id - b.id)
-                        : state.videogames.sort((a, b) => b.id - a.id)
+                        ? state.allVideogames.sort((a, b) => a.id - b.id)
+                        : state.allVideogames.sort((a, b) => b.id - a.id)
             }
         case ORDER_BY_NAME:
             // buscar cómo ordenar alfabéticamente los objetos -> será así?
             return {
                 ...state,
-                filteredVideogames:
+                videogames:
                     action.payload === 'Ascendente'
-                        ? state.videogames.sort((a, b) => a.name - b.name)
-                        : state.videogames.sort((a, b) => b.name - a.name)
+                        ? state.allVideogames.sort((a, b) => a.name.localeCompare(b.name))
+                        : state.allVideogames.sort((a, b) => b.name.localeCompare(a.name))
             }
+        default: return {
+            ...state
+        };
     }
-}
+};
+
+export default rootReducer;

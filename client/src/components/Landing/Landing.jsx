@@ -5,8 +5,8 @@ import './Landing.css';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
 import { faGamepad } from '@fortawesome/free-solid-svg-icons';
 
-
 export default function Landing(props) {
+
     return (
         <div className='landing'>
             <button onClick={() => { props.getStarted() }} className='start'><span><Icon icon={faGamepad} /> Start</span> </button>

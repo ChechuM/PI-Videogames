@@ -2,11 +2,15 @@
 
 import './SearchBar.css';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faMagnifyingGlass, faFilterCircleXmark, faSquarePlus } from '@fortawesome/free-solid-svg-icons';
+import * as actions from '../../redux/actions';
+import { useDispatch } from 'react-redux';
 
 export default function SearchBar(props) {
-
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const [input, setInput] = useState(0);
 
     const handleSearch = (event) => {
@@ -15,20 +19,24 @@ export default function SearchBar(props) {
     };
 
     const onSearch = (name) => {
-        if (!name) return 'there is no name';
+        if (!name) return;
         fetch(`http://localhost:3001/videogames/name?name=${name}`)
             .then((response) => { return response.json() })
-            //response es un array de objetos -> tengo que hacer que cambie el estado del componente Home para luego sean éstos los objetos que se rendericen
             .then((response) => {
-                // aquí necesito el estado global para poder cambiar el estado videogames desde el SearchBar y desde otros componentes también
-                console.log('esta es la respuesta del back al pedido de la fcion onSearch:', response)
+                dispatch(actions.getGamesByName(response))
             })
+    }
+
+    const backToAll = () => {
+        dispatch(actions.getAllGames())
     }
 
     return (
         <div className='barra'>
+            <button className='newGame' onClick={() => { navigate('/videogames/newgame') }}><Icon icon={faSquarePlus} /></button> <span> </span>
             <input type='search' className="input" value={input.id} onChange={handleSearch} placeholder=' Search your game by name' /><span> </span>
-            <button><Icon icon={faMagnifyingGlass} onClick={() => onSearch(input)} className='add' /></button>
+            <button className='onSearch'><Icon icon={faMagnifyingGlass} onClick={() => onSearch(input)} className='add' /></button>
+            <button className='noFilter'><Icon icon={faFilterCircleXmark} onClick={() => backToAll()} /></button>
         </div>
     )
 }

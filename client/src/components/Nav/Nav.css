@@ -1,0 +1,18 @@
+.homeBtn {
+    color: var(--ebony);
+    border: 0.1rem solid var(--sepia);
+    top: 0.5rem;
+    position: absolute;
+    right: 3rem;
+    cursor: pointer;
+    font-size: larger;
+}
+
+.spanHome {
+    display: none;
+}
+
+.homeBtn:hover .spanHome {
+    display: inline;
+    transition: 0.3ms;
+}

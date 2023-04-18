@@ -1,9 +1,7 @@
 import './Detail.css';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from "react";
-import { FontAwesomeIcon as Icon } from '@fortawesome/react-fontawesome';
-import { faHome } from '@fortawesome/free-solid-svg-icons';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+
 
 export default function Detail() {
     const { idVideogame } = useParams();
@@ -40,11 +38,10 @@ export default function Detail() {
 
     return (
         <div className='total'>
-            <button onClick={() => { navigate('/videogames') }} className='homeBtn'><span className='spanHome'> <Icon icon={faArrowLeft} />  back home! </span><Icon icon={faHome} /></button>
             <div className='detailTotal'>
                 <div className='nameImgId'>
                     <h1 className='detailName'>{videogame.name}</h1>
-                    <img src={videogame.image} alt='videogames image' className='detailImage' />
+                    <img src={videogame.image} alt='videogame' className='detailImage' />
                     <p className='idDetail'>id: {videogame.id}</p>
                 </div>
                 <div className='textos'>

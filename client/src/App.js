@@ -1,15 +1,17 @@
 import './App.css';
 import { React } from 'react';
-import { Route, Routes, useNavigate } from 'react-router-dom';
+import { Route, Routes, useNavigate, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import Detail from './components/Detail/Detail';
-import Form from './components/Form/Form';
+import Create from './components/Create/Create';
 import Genres from './components/Genres/Genres';
 import Home from './components/Home/Home';
 import Landing from './components/Landing/Landing';
+import Nav from './components/Nav/Nav';
 
 function App() {
   const navigate = useNavigate();
+  const location = useLocation();
   const getStarted = () => {
     navigate('/videogames');
   }
@@ -22,10 +24,13 @@ function App() {
         console.log('esta es la respuesta del back al pedido de la fcion onSearch:', response)
       })
   }
+
+
   return (
     <div className="App">
+      {location.pathname !== '/' && <Nav />}
       <Routes>
-        <Route exact path='/videogames/newgame' element={<Form />} />
+        <Route exact path='/videogames/newgame' element={<Create />} />
         <Route exact path='/videogames/:idVideogame' element={<Detail />} />
         <Route exact path='/videogames' element={<Home onSearch={onSearch} />} />
         <Route exact path='/' element={<Landing getStarted={getStarted} />} />

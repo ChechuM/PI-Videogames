@@ -1,4 +1,19 @@
-html {
-    background: linear-gradient(rgba(0, 0, 0, 0.80), rgba(0, 0, 0, 0.80)), url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp7Ipd8adHPmL8dSz51jzAyuyBRjc2vs6dVg&usqp=CAU');
-    /* background: url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSp7Ipd8adHPmL8dSz51jzAyuyBRjc2vs6dVg&usqp=CAU') */
+.formDiv {
+    margin-left: 2rem;
+    margin-top: 10rem;
+    padding: 0.2rem;
+    background: rgba(26, 61, 88, 70%);
+    color: var(--blue);
+    width: 50rem;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+label {
+    font-weight: 600;
+}
+
+input {
+    width: 40rem;
 }

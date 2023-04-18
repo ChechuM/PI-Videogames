@@ -1,0 +1,19 @@
+.bigDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-left: 7rem;
+    padding-right: 7rem;
+    margin-bottom: 3rem;
+}
+
+.selectBar {
+    font-size: larger;
+    color: var(--blue);
+    display: block;
+}
+
+.spanTitle {
+    color: var(--bone);
+    font-weight: 600;
+}

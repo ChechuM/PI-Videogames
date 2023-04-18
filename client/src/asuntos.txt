@@ -6,3 +6,5 @@ Preguntas que tengo:
 
 Quiero:
 * Arreglar las vistas para la web en caso de ser vista en el móvil -> responsive design
+* Quiero cambiar el formato de la fecha
+* Quiero que cuando vuelva al home desde Detail vaya a la página anterior, no a /videogames y que cargue todos los videojuegos de nuevo y se resetee

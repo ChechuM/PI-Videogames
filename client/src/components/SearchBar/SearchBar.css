@@ -1,8 +1,10 @@
 .barra {
     background: rgba(255, 255, 255, 0.2);
     margin-top: 0.1rem;
+    padding-top: 0.5rem;
     padding-right: 0.5rem;
     height: 4.5rem;
+    align-content: center;
 }
 
 .input {
@@ -10,4 +12,28 @@
     font-size: medium;
     width: 28rem;
     min-height: 3rem;
+}
+
+.onSearch {
+    font-size: larger;
+    color: var(--ebony);
+}
+
+.noFilter {
+    font-size: larger;
+    color: var(--ebony);
+}
+
+.noFilter:hover .filtersX {
+    display: inline;
+    transition: 0.3ms;
+}
+
+.filtersX {
+    display: none;
+}
+
+.newGame {
+    font-size: larger;
+    color: var(--ebony);
 }
