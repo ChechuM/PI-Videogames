@@ -22,57 +22,46 @@
 // setVideogame en orden
 
 import './Selectors.css';
+import { useSelector } from 'react-redux';
 
 export default function Selectors() {
+    const genres = useSelector(store => store.genres);
+
     return (
         <div className='bigDiv'>
             <div className='selectGenre'>
                 <span className='spanTitle'>Filter by Genre: </span>
                 <select className='selectBar'>
                     <option value="selectGenre">Select a genre...</option>
-                    <option value="action">Action</option>
-                    <option value="indie">Indie</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="RPG">RPG</option>
-                    <option value="strategy">Strategy</option>
-                    <option value="shooter">Shooter</option>
-                    <option value="casual">Casual</option>
-                    <option value="simulation">Simulation</option>
-                    <option value="puzzle">Puzzle</option>
-                    <option value="arcade">Arcade</option>
-                    <option value="platformer">Platformer</option>
-                    <option value="racing">Racing</option>
-                    <option value="multiplayer">Missively Multiplayer</option>
-                    <option value="sports">Sports</option>
-                    <option value="fighting">Fighting</option>
-                    <option value="family">Family</option>
-                    <option value="board">Board Games</option>
-                    <option value="educational">Educational</option>
-                    <option value="card">Card</option>
+                    {
+                        genres.map((g) => {
+                            return <option value={g.name}>{g.name}</option>
+                        })
+                    }
                 </select>
             </div>
             <div className='selectOrigin'>
                 <span className='spanTitle'>Filter by Origin: </span>
                 <select className='selectBar'>
                     <option value="selectOrigin">Select origin...</option>
-                    <option value="API">API</option>
-                    <option value="BDD">BDD</option>
+                    <option value="API">From Api</option>
+                    <option value="BDD">Created by User</option>
                 </select>
             </div>
             <div className='orderByName'>
                 <span className='spanTitle'>Order by Name: </span>
                 <select className='selectBar'>
                     <option value="orderByName">Select order...</option>
-                    <option value="ascName">Ascendente</option>
-                    <option value="descName">Descendente</option>
+                    <option value="ascName">From A to Z</option>
+                    <option value="descName">From Z to A</option>
                 </select>
             </div>
             <div className='orderByRating'>
                 <span className='spanTitle'>Order by Rating: </span>
                 <select className='selectBar'>
                     <option value="orderByRating">Select order...</option>
-                    <option value="ascRating">Ascendente</option>
-                    <option value="descRating">Descendente</option>
+                    <option value="ascRating">From 0 to 5</option>
+                    <option value="descRating">From 5 to 0</option>
                 </select>
             </div>
         </div>

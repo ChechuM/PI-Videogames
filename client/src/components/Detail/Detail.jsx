@@ -1,12 +1,10 @@
 import './Detail.css';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useEffect, useState } from "react";
 
 
 export default function Detail() {
     const { idVideogame } = useParams();
-    const navigate = useNavigate();
-
 
     const [videogame, setVideogame] = useState({
         id: '',
@@ -23,6 +21,13 @@ export default function Detail() {
         fetch(`http://localhost:3001/videogames/${idVideogame}`)
             .then((response) => response.json())
             .then((game) => {
+                console.log('esta es la response del useEffect en el Detail con un get', game)
+                if (game.id.length > 10) {
+                    let genres = game.genres.map((gen) => gen.name);
+                    game.gens = genres.join(', ')
+
+                    game.platforms = game.platforms.join(', ')
+                }
                 setVideogame({
                     id: game.id,
                     name: game.name,
@@ -31,26 +36,24 @@ export default function Detail() {
                     description: game.description,
                     launch: game.launch,
                     rating: game.rating,
-                    genres: game.genres
+                    genres: game.gens
                 })
             })
     }, [idVideogame])
 
     return (
         <div className='total'>
-            <div className='detailTotal'>
-                <div className='nameImgId'>
-                    <h1 className='detailName'>{videogame.name}</h1>
-                    <img src={videogame.image} alt='videogame' className='detailImage' />
-                    <p className='idDetail'>id: {videogame.id}</p>
-                </div>
-                <div className='textos'>
-                    <div className='description'>{videogame.description} launched on {videogame.launch}</div>
-                    <p> Genres: {videogame.genres}</p>
-                    <p> You can play it in: {videogame.platforms}</p>
-                    <h3> Rating: {videogame.rating}</h3>
-                </div>
-            </div>
+            <p className='idDetail'>id: {videogame.id}</p>
+            <h1 className='detailName'>{videogame.name}</h1>
+            <img src={videogame.image} alt='videogame' className='detailImage' />
+            <h3> Rating: {videogame.rating}</h3>
+            <p className='genPlat'> Genres: {videogame.genres}</p>
+            <p className='description'>{videogame.description}</p>
+            <p className='genPlat'> You can play it in: {videogame.platforms}</p>
+            <p className='launchDetail'> Launch: {videogame.launch}</p>
+            <p className='launchDetail'> Launched: {(new Date(videogame.launch)).toDateString()}</p>
+            <p className='launchDetail'> localLaunched: {(new Date(videogame.launch)).toLocaleDateString()}</p>
+
         </div>
     )
 };

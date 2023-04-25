@@ -5,7 +5,9 @@ const axios = require('axios');
 const {
     API_KEY
 } = process.env;
-const apiGames = 'https://api.rawg.io/api/games?key=' + API_KEY;
+const cantGames = "&page_size=200"
+const laKey = '?key=' + API_KEY;
+const apiGames = 'https://api.rawg.io/api/games' + laKey + cantGames;
 
 const objGame = (game) => {
     let platArr = game.platforms;
@@ -41,37 +43,41 @@ const objGame = (game) => {
 // DONE! = Si no existe el videojuego, debe mostrar un mensaje adecuado
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
-    searchName = name.toLowerCase();
     try {
-        await axios(apiGames)
-            .then((response) => { // 
+        await axios(`https://api.rawg.io/api/games${laKey}&search=${name}`)
+            .then((response) => {
                 let results = response.data.results;
-                let sortApiName = [];
-                for (let game = 0; game < results.length; game++) {
-                    let nameMin = results[game].name.toLowerCase();
-                    if (nameMin.includes(searchName)) {
-                        let wanted = objGame(results[game]);
-                        sortApiName.push(wanted);
+                let sortApiName = results.map((game) => {
+                    let gens = game.genres.map(g => g.name);
+                    let wanted = {
+                        id: game.id,
+                        name: game.name,
+                        image: game.background_image,
+                        gens: gens.join(', ')
                     }
-                }
+                    return wanted;
+                });
                 return sortApiName;
             })
             .then(async (sortApiName) => {
                 if (sortApiName.length < 15) {
-                    let sortBDDName = await findGameByName(searchName);
-                    let totalGameName;
+                    let searchName = name.toLowerCase()
+                    let sortBDDName = await findGameByName(searchName, { include: [{ model: Genres.name, as: gens }] });
+                    console.log('this is findGameByName, this is what came back:', sortBDDName)
+                    let totalGameName = []
                     if (typeof sortBDDName !== "string") totalGameName = sortApiName.concat(sortBDDName);
                     else totalGameName = [...sortApiName]
                     return totalGameName;
                 }
+                else totalGameName = [...sortApiName]
+                return totalGameName
             })
             .then((totalGameName) => {
                 if (totalGameName.length === 0) {
                     let notFound = `The Videogame called ${name} does not exist... yet`
                     res.status(200).json(notFound)
                 }
-                if (totalGameName.length > 15) res.status(200).json(totalGameName.slice(0, 15))
-                res.status(200).json(totalGameName)
+                if (totalGameName.length >= 15) res.status(200).json(totalGameName.slice(0, 15))
             })
     }
     catch (error) {
@@ -82,26 +88,36 @@ gamesRouter.get('/name', async (req, res) => {
 // DONE! = Debería devolver un objeto con la información sobre el juego pedido por ID
 // DONE! = Tiene que incluir los datos de los géneros
 // DONE! = Tanto para juegos en la BDD como los de la Api
+
 gamesRouter.get('/:idVideogame', async (req, res) => {
     const { idVideogame } = req.params;
+
     if (idVideogame.length > 10) {
+        // if (idVideogame.length > 10) {
         const juegoBDD = await getGameById(idVideogame);
+        // { include: [{ model: Genres.name, as: gens }] }
+        console.log('this is getGameById response en el gamesRouter:', juegoBDD)
         if (juegoBDD) res.status(200).json(juegoBDD);
         else res.status(400).json({ error: error.message });
     }
     else
         try {
-            await axios(apiGames)
+            await axios(`https://api.rawg.io/api/games/${idVideogame}${laKey}`)
                 .then((response) => {
-                    let results = response.data.results;
-                    let wanted = {};
-                    for (let i = 0; i < results.length; i++) {
-                        const game = results[i];
-                        if (game.id.toString() === idVideogame) {
-                            wanted = objGame(game)
-                        }
+                    let results = response.data;
+                    let plat = results.parent_platforms.map(p => p.platform.name);
+                    let gens = results.genres.map(g => g.name);
+                    let game = {
+                        id: results.id,
+                        name: results.name,
+                        description: results.description_raw,
+                        image: results.background_image,
+                        rating: results.rating,
+                        launch: results.released,
+                        platforms: plat.join(', '),
+                        gens: gens.join(', ')
                     }
-                    if (wanted) return res.status(200).json(wanted)
+                    if (game) return res.status(200).json(game)
                     else {
                         let notFound = `The Videogame with id ${idVideogame} does not exist... yet`;
                         return res.status(200).json(notFound)
@@ -118,6 +134,7 @@ gamesRouter.get('/', async (req, res) => {
     let gamesTotal = [];
     try {
         let gamesBDD = await getGames(); // ojo, viene un montón de info extra con el método getGames();
+        console.log('this is gamesBDD en getGames de gamesRouter', gamesBDD)
         gamesTotal = [...gamesTotal, gamesBDD];
         gamesTotal = gamesTotal[0];
         await axios(apiGames)
@@ -143,9 +160,10 @@ gamesRouter.get('/', async (req, res) => {
 // DONE! = Creando un nuevo juevo en la BDD relacionado con al menos un género asociado
 // DONE! = Información recibida por body
 gamesRouter.post('/', async (req, res) => {
+    console.log('req', req.body)
     try {
-        const { name, description, platforms, image, launch, rating, genre } = req.body;
-        const newGame = await createGame(name, description, platforms, image, launch, rating, genre);
+        const { name, description, platforms, image, launch, rating, gens } = req.body.game;
+        const newGame = await createGame(name, description, platforms, image, launch, rating, gens);
         res.status(200).json(newGame);
     }
     catch (error) {

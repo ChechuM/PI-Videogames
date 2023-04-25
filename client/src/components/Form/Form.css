@@ -2,18 +2,32 @@
     margin-left: 2rem;
     margin-top: 10rem;
     padding: 0.2rem;
+    padding-top: 2rem;
     background: rgba(26, 61, 88, 70%);
     color: var(--blue);
     width: 50rem;
     display: flex;
     justify-content: center;
     align-content: center;
+    border: 0.1rem solid var(--blue);
 }
 
 label {
     font-weight: 600;
 }
 
-input {
+.inputGral {
     width: 40rem;
+}
+
+.platformsCheck {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-left: 2rem;
+    padding-right: 1rem;
+}
+
+.platCheck {
+    margin-right: 1rem;
 }

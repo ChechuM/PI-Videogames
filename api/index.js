@@ -26,4 +26,4 @@ conn.sync({ force: true }).then(() => {
     // aquí puedo deployar la fción para guardar en la BDD la info de Genres de la API
     console.log('%s listening at 3001'); // eslint-disable-line no-console
   });
-});
+}).catch((error) => console.log(error));

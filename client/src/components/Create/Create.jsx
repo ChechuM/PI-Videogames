@@ -14,60 +14,103 @@ import './Create.css';
 import Form from '../Form/Form';
 import Boceto from '../Boceto/Boceto';
 import { React, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import defaultIcon from '../Form/defaultIcon';
+import * as actions from '../../redux/actions';
 
-export function validate(rating) {
-    console.log('entré a la fción validate')
+export function validate({ name, rating, platforms, gens }) {
+
+    const specialChars = /[`!@#$%^&*()_+\-=\]{};':"\\|,.<>?~]/;
     let errors = {};
-    if (rating > 5 || rating < 0) errors.rating = 'Rating must be a number from 0 to 5'; // rating es un string, creo que puedo compararlo
+    if (!name) errors.name = 'Please write the name of the game';
+    if (name.length > 20) errors.name = 'Name must have 20 characters max';
+    if (specialChars.test(name)) errors.name = 'Name must be alphanumeric only';
+    if (rating > 5 || !rating) errors.rating = 'Rating must be a number from 0 to 5';
+    if (platforms.length === 0) errors.platforms = 'Please pick at least one platform from the list';
+    if (gens.length === 0) errors.gens = 'Please pick at least one genre from the list';
+    return errors;
 }
 
 export default function Create() {
+    const dispatch = useDispatch();
+
     const [input, setInput] = useState({
         name: '',
         image: '',
-        platforms: '',
+        platforms: [],
         launch: '',
         rating: '',
-        genres: '',
+        gens: [],
         description: ''
     });
 
     const [errors, setErrors] = useState({
-        rating: ''
+        name: '',
+        rating: '',
+        platforms: [],
+        gens: []
     });
 
     const handleInputChange = (event) => {
-        const value = event.target.value;
-        const name = event.target.name;
+        const { value, name } = event.target;
         setInput({
             ...input,
             [name]: value
         })
+        setErrors(
+            validate({
+                ...input,
+                [name]: value
+            })
+        )
     };
 
-    const descripcion = `${input.name} is a ${input.genres} game with a rating of ${input.rating}`;
-    const checkingSelect = (event) => {
-        let genArray = event.map((gen) => gen.value)
-        let genString = genArray.join(', ')
-        setInput({
-            ...input,
-            genres: genString,
-            description: descripcion
-        })
+    const generateGame = () => {
+        if (!input.image) {
+            setInput(current => (
+                {
+                    ...current,
+                    image: defaultIcon
+                })
+            )
+        }
+        if (!input.launch) {
+            let defLaunch = '2023-05-02'
+            setInput(current => (
+                {
+                    ...current,
+                    launch: defLaunch
+                }
+            ))
+        }
+        if (!input.description) {
+            let description = `${input.name} is a game that can be played in ${input.platforms.length} different platforms: ${input.platforms.join(', ')} `
+            setInput(current => (
+                {
+                    ...current,
+                    description: description
+                }
+            ))
+        }
     }
 
-    const agreeDesc = () => {
-        setInput({
-            ...input,
-            description: descripcion
-        })
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        const errors = validate(input);
+        if (Object.values(errors).length === 0) {
+            dispatch(actions.addGame(input))
+            alert('New game created!')
+        }
+        else {
+            setErrors(errors);
+            alert('The new game has to fulfill certain parameters, please check that everything is ok')
+        }
     }
 
     return (
         <div className='bothDiv'>
-            <Form checkingSelect={checkingSelect} handleInputChange={handleInputChange} input={input} errors={errors} />
-            <Boceto input={input} errors={errors} agreeDesc={agreeDesc} descripcion={descripcion} />
+            <Form handleInputChange={handleInputChange} input={input} setInput={setInput} errors={errors} setErrors={setErrors} handleSubmit={handleSubmit} />
+            <Boceto input={input} errors={errors} generateGame={generateGame} setInput={setInput} />
         </div>
-
     )
-};
+}

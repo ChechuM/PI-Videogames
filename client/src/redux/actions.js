@@ -45,10 +45,15 @@ export const getGamesByName = (games) => {
 }
 
 export const addGame = (game) => {
-    console.log('entré a addGame')
-    return {
-        type: ADD_GAME,
-        payload: game
+    return async function (dispatch) {
+        await axios.post('http://localhost:3001/videogames', { game })
+            .then((response) => {
+                return dispatch({
+                    type: ADD_GAME,
+                    payload: response
+                })
+            })
+            .catch((err) => console.log(err));
     }
 }
 

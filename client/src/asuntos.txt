@@ -5,6 +5,13 @@ Preguntas que tengo:
 * Qué es el React.StrictMode?
 
 Quiero:
+* Crear un loader para cuando carga la página
+* Cambiar estilos:
+ --> botones con hover a otro color -> pueden invertirse los colores azul oscuro y rosa
+ --> los selectores también pueden tener la misma dinámica
+ --> botones de paginado prev y next alejados y con el mismo efecto hover
+* Refactorizar los checkbox de Genres y Platforms -> podría ser una sola fción
+
 * Arreglar las vistas para la web en caso de ser vista en el móvil -> responsive design
-* Quiero cambiar el formato de la fecha
 * Quiero que cuando vuelva al home desde Detail vaya a la página anterior, no a /videogames y que cargue todos los videojuegos de nuevo y se resetee
+* Quiero cambiar el formato de la fecha

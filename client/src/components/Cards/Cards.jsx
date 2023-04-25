@@ -10,7 +10,6 @@ export default function Cards(props) {
     let min = currentPg * ITEMS_PER_PAGE
     let max = min + ITEMS_PER_PAGE
 
-    let i = 0
     return (
         <div className='divCards' >
             {

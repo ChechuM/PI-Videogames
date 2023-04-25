@@ -20,14 +20,12 @@ export default function Home(props) {
     useEffect(() => {
         dispatch(actions.getAllGames())
         dispatch(actions.getAllGenres())
-    }, [dispatch])
+    }, [])
 
-    // creo otro estado local que setee el nro de página inicial y que luego permita cambiarlo
+    // PAGINADO: creo otro estado local que setee el nro de página inicial y que luego permita cambiarlo
     const [currentPg, setCurrentPage] = useState(0)
 
     const ITEMS_PER_PAGE = 15; // cuántos items quiero mostrar por página
-
-    // CARGA EL TOTAL DE JUEGOS EN EL ESTADO LOCAL
 
     const nextHandler = () => { // éste handler va a cambiar el nro de página + 1
         let top = (videogames.length / ITEMS_PER_PAGE)
@@ -39,8 +37,6 @@ export default function Home(props) {
         if (currentPg >= 1) setCurrentPage((currentPg) => currentPg - 1);
         else return
     }
-
-    // setear responsive web
 
     return (
 

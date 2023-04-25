@@ -21,7 +21,7 @@ const rootReducer = (state = initialState, action) => {
                 genres: [...action.payload]
             }
 
-        case GET_GAMES_BY_NAME:
+        case GET_GAMES_BY_NAME: // no tiene que buscarlo del state! tiene que ir a la BDD y a la Api
             return {
                 ...state,
                 videogames: [...action.payload]

@@ -1,6 +1,8 @@
 .total {
-    padding: 2rem;
-    display: flex;
+    padding: 1rem;
+    background: rgba(172, 167, 151, 70%);
+    width: 70rem;
+    margin-left: 31.5rem;
 }
 
 .homeBtn {
@@ -24,7 +26,7 @@
 
 .detailImage {
     height: 30rem;
-    max-width: 40rem;
+    max-width: 70rem;
     width: auto;
     border-radius: 1rem;
 }
@@ -33,17 +35,14 @@
     font-size: smaller;
 }
 
-.detailTotal {
-    display: flex;
-    justify-content: center;
-    align-content: center;
-}
-
-.textos {
-    padding: 15rem;
-    background: rgba(172, 167, 151, 70%)
+.launchDetail {
+    font-size: smaller;
 }
 
 .description {
-    font-weight: bolder;
+    padding: 2rem;
+}
+
+.genPlat {
+    font-weight: bold;
 }

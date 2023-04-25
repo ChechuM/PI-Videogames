@@ -17,11 +17,13 @@
 .onSearch {
     font-size: larger;
     color: var(--ebony);
+    cursor: pointer;
 }
 
 .noFilter {
     font-size: larger;
     color: var(--ebony);
+    cursor: pointer;
 }
 
 .noFilter:hover .filtersX {
@@ -36,4 +38,5 @@
 .newGame {
     font-size: larger;
     color: var(--ebony);
+    cursor: pointer;
 }
