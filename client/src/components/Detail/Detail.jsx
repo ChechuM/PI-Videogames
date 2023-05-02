@@ -21,7 +21,6 @@ export default function Detail() {
         fetch(`http://localhost:3001/videogames/${idVideogame}`)
             .then((response) => response.json())
             .then((game) => {
-                console.log('esta es la response del useEffect en el Detail con un get', game)
                 if (game.id.length > 10) {
                     let genres = game.genres.map((gen) => gen.name);
                     game.gens = genres.join(', ')

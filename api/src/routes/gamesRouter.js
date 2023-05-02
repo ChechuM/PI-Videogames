@@ -5,7 +5,7 @@ const axios = require('axios');
 const {
     API_KEY
 } = process.env;
-const cantGames = "&page_size=200"
+const cantGames = "&page_size=200";
 const laKey = '?key=' + API_KEY;
 const apiGames = 'https://api.rawg.io/api/games' + laKey + cantGames;
 
@@ -23,16 +23,14 @@ const objGame = (game) => {
         let name = gen.name;
         genresApi.push(name);
     })
-    let genString = genresApi.join(', ')
     let wanted = {
         id: game.id,
         name: game.name,
-        description: `${game.name} is a game played in ${plataformas.length} different platforms with a rating of ${game.rating}`,
         platforms: platString,
         image: game.background_image,
         launch: game.released,
         rating: game.rating,
-        genres: genString
+        genres: genresApi
     }
     return wanted;
 }
@@ -43,6 +41,8 @@ const objGame = (game) => {
 // DONE! = Si no existe el videojuego, debe mostrar un mensaje adecuado
 gamesRouter.get('/name', async (req, res) => {
     const { name } = req.query;
+    let searchName = name.toLowerCase()
+    let BDDName = await findGameByName(searchName);
     try {
         await axios(`https://api.rawg.io/api/games${laKey}&search=${name}`)
             .then((response) => {
@@ -53,24 +53,16 @@ gamesRouter.get('/name', async (req, res) => {
                         id: game.id,
                         name: game.name,
                         image: game.background_image,
-                        gens: gens.join(', ')
+                        genres: gens.join(', '),
+                        rating: game.rating
                     }
                     return wanted;
                 });
                 return sortApiName;
             })
             .then(async (sortApiName) => {
-                if (sortApiName.length < 15) {
-                    let searchName = name.toLowerCase()
-                    let sortBDDName = await findGameByName(searchName, { include: [{ model: Genres.name, as: gens }] });
-                    console.log('this is findGameByName, this is what came back:', sortBDDName)
-                    let totalGameName = []
-                    if (typeof sortBDDName !== "string") totalGameName = sortApiName.concat(sortBDDName);
-                    else totalGameName = [...sortApiName]
-                    return totalGameName;
-                }
-                else totalGameName = [...sortApiName]
-                return totalGameName
+                let totalGameName = BDDName.concat(sortApiName)
+                return res.status(200).json(totalGameName)
             })
             .then((totalGameName) => {
                 if (totalGameName.length === 0) {
@@ -85,6 +77,7 @@ gamesRouter.get('/name', async (req, res) => {
     }
 });
 
+
 // DONE! = Debería devolver un objeto con la información sobre el juego pedido por ID
 // DONE! = Tiene que incluir los datos de los géneros
 // DONE! = Tanto para juegos en la BDD como los de la Api
@@ -93,10 +86,7 @@ gamesRouter.get('/:idVideogame', async (req, res) => {
     const { idVideogame } = req.params;
 
     if (idVideogame.length > 10) {
-        // if (idVideogame.length > 10) {
         const juegoBDD = await getGameById(idVideogame);
-        // { include: [{ model: Genres.name, as: gens }] }
-        console.log('this is getGameById response en el gamesRouter:', juegoBDD)
         if (juegoBDD) res.status(200).json(juegoBDD);
         else res.status(400).json({ error: error.message });
     }
@@ -134,7 +124,6 @@ gamesRouter.get('/', async (req, res) => {
     let gamesTotal = [];
     try {
         let gamesBDD = await getGames(); // ojo, viene un montón de info extra con el método getGames();
-        console.log('this is gamesBDD en getGames de gamesRouter', gamesBDD)
         gamesTotal = [...gamesTotal, gamesBDD];
         gamesTotal = gamesTotal[0];
         await axios(apiGames)
@@ -160,7 +149,6 @@ gamesRouter.get('/', async (req, res) => {
 // DONE! = Creando un nuevo juevo en la BDD relacionado con al menos un género asociado
 // DONE! = Información recibida por body
 gamesRouter.post('/', async (req, res) => {
-    console.log('req', req.body)
     try {
         const { name, description, platforms, image, launch, rating, gens } = req.body.game;
         const newGame = await createGame(name, description, platforms, image, launch, rating, gens);

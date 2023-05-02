@@ -22,16 +22,39 @@
 // setVideogame en orden
 
 import './Selectors.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import * as actions from '../../redux/actions';
+
 
 export default function Selectors() {
     const genres = useSelector(store => store.genres);
+    const dispatch = useDispatch();
+
+    const filterByOrigin = (event) => {
+        let value = event.target.value;
+        dispatch(actions.filterByOrigin(value))
+    }
+
+    const orderByRating = (event) => {
+        let value = event.target.value;
+        dispatch(actions.orderByRating(value))
+    }
+
+    const orderByName = (event) => {
+        let value = event.target.value;
+        dispatch(actions.orderByName(value))
+    }
+
+    const filterByGenre = (event) => {
+        let value = event.target.value;
+        dispatch(actions.filterByGenre(value))
+    }
 
     return (
         <div className='bigDiv'>
             <div className='selectGenre'>
                 <span className='spanTitle'>Filter by Genre: </span>
-                <select className='selectBar'>
+                <select className='selectBar' onChange={filterByGenre}>
                     <option value="selectGenre">Select a genre...</option>
                     {
                         genres.map((g) => {
@@ -42,15 +65,15 @@ export default function Selectors() {
             </div>
             <div className='selectOrigin'>
                 <span className='spanTitle'>Filter by Origin: </span>
-                <select className='selectBar'>
+                <select className='selectBar' onChange={filterByOrigin}>
                     <option value="selectOrigin">Select origin...</option>
-                    <option value="API">From Api</option>
-                    <option value="BDD">Created by User</option>
+                    <option value="Api" >From Api</option>
+                    <option value="User" >Created by User</option>
                 </select>
             </div>
             <div className='orderByName'>
                 <span className='spanTitle'>Order by Name: </span>
-                <select className='selectBar'>
+                <select className='selectBar' onChange={orderByName}>
                     <option value="orderByName">Select order...</option>
                     <option value="ascName">From A to Z</option>
                     <option value="descName">From Z to A</option>
@@ -58,7 +81,7 @@ export default function Selectors() {
             </div>
             <div className='orderByRating'>
                 <span className='spanTitle'>Order by Rating: </span>
-                <select className='selectBar'>
+                <select className='selectBar' onChange={orderByRating}>
                     <option value="orderByRating">Select order...</option>
                     <option value="ascRating">From 0 to 5</option>
                     <option value="descRating">From 5 to 0</option>

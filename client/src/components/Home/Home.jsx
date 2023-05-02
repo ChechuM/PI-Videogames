@@ -17,7 +17,9 @@ export default function Home(props) {
     const videogames = useSelector(store => store.videogames)
     const dispatch = useDispatch();
 
+    // No quiero que este useEffect se despache cada vez que entro en esta página ... quizás puedo lanzarlo si detecto que videogames está vacío, pero que no lo haga si ya tiene info -> porque significa que ya está seteado para que renderice algo -> pero mejor es que lo haga si hay cambios!
     useEffect(() => {
+        // if (videogames.length === 0) 
         dispatch(actions.getAllGames())
         dispatch(actions.getAllGenres())
     }, [])

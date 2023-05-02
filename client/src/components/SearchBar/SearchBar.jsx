@@ -18,13 +18,9 @@ export default function SearchBar(props) {
         setInput(value);
     };
 
-    const onSearch = (name) => {
+    const onSearch = (name) => { // no tiene sentido lo que estoy haciendo
         if (!name) return;
-        fetch(`http://localhost:3001/videogames/name?name=${name}`)
-            .then((response) => { return response.json() })
-            .then((response) => {
-                dispatch(actions.getGamesByName(response))
-            })
+        dispatch(actions.getGamesByName(name));
     }
 
     const backToAll = () => {

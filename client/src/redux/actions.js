@@ -33,12 +33,13 @@ export const getAllGenres = () => {
     }
 }
 
-export const getGamesByName = (games) => {
+export const getGamesByName = (game) => {
     return async function (dispatch) {
+        let response = await axios.get(`http://localhost:3001/videogames/name?name=${game}`)
         return dispatch(
             {
                 type: GET_GAMES_BY_NAME,
-                payload: games
+                payload: response.data
             }
         )
     }
@@ -46,7 +47,7 @@ export const getGamesByName = (games) => {
 
 export const addGame = (game) => {
     return async function (dispatch) {
-        await axios.post('http://localhost:3001/videogames', { game })
+        await axios.post('http://localhost:3001/videogames', { game }) // se envía así porque es un post y envía un JSON!!!
             .then((response) => {
                 return dispatch({
                     type: ADD_GAME,
@@ -58,16 +59,13 @@ export const addGame = (game) => {
 }
 
 export const filterByGenre = (genre) => {
-    console.log('entré a filterByGenre')
-    // debería obtener aquí las tablas intermedias y trabajar desde aquí!!!!
     return {
         type: FILTER_BY_GENRE,
-        payload: genre
+        payload: genre,
     }
 }
 
 export const filterByOrigin = (origin) => {
-    console.log('entré a filterByOrigin')
     return {
         type: FILTER_BY_ORIGIN,
         payload: origin
@@ -75,7 +73,6 @@ export const filterByOrigin = (origin) => {
 }
 
 export const orderByRating = (order) => {
-    console.log('entré a orderByRating')
     return {
         type: ORDER_BY_RATING,
         payload: order
@@ -83,7 +80,6 @@ export const orderByRating = (order) => {
 }
 
 export const orderByName = (order) => {
-    console.log('entré a orderByName')
     return {
         type: ORDER_BY_NAME,
         payload: order
